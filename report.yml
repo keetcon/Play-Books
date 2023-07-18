@@ -7,5 +7,5 @@
     - name: Report Server Facts
       ansible.builtin.debug:
         msg:
-          - "{{ ansible_hostname }}"
+          - "{{ ansible_fqdn }}"
           - "{{ansible_distribution_release }}"
