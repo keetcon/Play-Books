@@ -1,0 +1,11 @@
+---
+- name: Create Local User
+  hosts: '{{ target }}'
+  become: yes
+  gather_facts: true
+  tasks:
+    - name: Create Ansible-Local User
+      ansible.builtin.user:
+        name: ansible-local
+        expires: -1
+        password: "'coolpassword123' | password_hash(sha512')"
