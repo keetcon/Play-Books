@@ -1,0 +1,10 @@
+---
+- name: Set MOTD
+  hosts: '{{ target }}'
+  become: yes
+  gather_facts: true
+  tasks:
+    - name: Copy MOTD
+      ansible.builtin.template:
+        src: motd.j2
+        dest: /etc/motd
