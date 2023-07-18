@@ -7,5 +7,6 @@
     - name: Report Server Facts
       ansible.builtin.debug:
         msg:
-          - "{{ ansible_fqdn }}"
-          - "{{ansible_distribution_release }}"
+          - "Hostname: {{ ansible_fqdn }}"
+          - "Release Name: {{ansible_distribution_release }}"
+          - "Nameservers: {{ansible_dns['nameservers'] }}"
