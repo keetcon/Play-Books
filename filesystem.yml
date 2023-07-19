@@ -14,10 +14,18 @@
         part_end: "100%"
         name: "smol data"
         label: "gpt"
+    - name: Create list of PVs
+      set_fact:
+        pvs: '{{ pvs + [item] }}'
+      loop: ansible_facts['lvm']['pvs']
+      when: item['vg'] == "rhel"
+    - name:
+      debug:
+        msg: "{{ pvs }}"
     - name: Create a volume group on top of /dev/sda1 with physical extent size = 32MB
       community.general.lvg:
         vg: "rhel"
-        pvs: '{{ new_disk }}1'
+        pvs: '{{ pvs }} '
     - name: Extend the logical volume by given space
       community.general.lvol:
         vg: "rhel"
@@ -29,7 +37,7 @@
         vg: "rhel"
         lv: data
         size: 100%FREE
-    - name: Create a ext2 filesystem on /dev/mapper/rhel-data
+    - name: Create a xfs filesystem on /dev/mapper/rhel-data
       community.general.filesystem:
         fstype: xfs
         dev: /dev/mapper/rhel-data
