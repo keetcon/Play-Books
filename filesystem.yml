@@ -17,7 +17,7 @@
     - name: Create list of PVs
       set_fact:
         pvs: '{{ pvs + [item] }}'
-      loop: "{{ansible_facts['lvm']['pvs']}}"
+      loop: "{{ansible_facts['lvm']['pvs'] | list }}"
       when: item['vg'] == "rhel"
     - name:
       debug:
