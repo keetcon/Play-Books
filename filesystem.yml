@@ -1,0 +1,41 @@
+---
+- name: Create File Systems
+  hosts: '{{ target }}'
+  become: yes
+  gather_facts: true
+  tasks:
+    - name: Create a new primary partition for LVM
+      community.general.parted:
+        device: '{{ new_disk }}'
+        number: 1
+        flags: [ lvm ]
+        state: present
+        part_start: "0%"
+        part_end: "100%"
+        name: "smol data"
+        label: "gpt"
+    - name: Create a volume group on top of /dev/sda1 with physical extent size = 32MB
+      community.general.lvg:
+        vg: "rhel"
+        pvs: '{{ new_disk }}1'
+    - name: Extend the logical volume by given space
+      community.general.lvol:
+        vg: "rhel"
+        lv: var
+        size: +5gb
+        resizefs: true
+    - name: Create the remaining logical volume by given space
+      community.general.lvol:
+        vg: "rhel"
+        lv: data
+        size: 100%FREE
+    - name: Create a ext2 filesystem on /dev/mapper/rhel-data
+      community.general.filesystem:
+        fstype: xfs
+        dev: /dev/mapper/rhel-data
+    - name: Mount up device by label
+      ansible.posix.mount:
+        path: /data
+        src: /dev/mapper/rhel-data
+        fstype: xfs
+        state: mounted
