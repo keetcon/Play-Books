@@ -8,7 +8,7 @@
       ansible.builtin.debug:
         msg:
           - "Hostname: {{ ansible_fqdn }}"
-          - "MEMORY: {{ ansible_memtotal_mb }}
+          - "MEMORY: {{ ansible_memtotal_mb }}"
           - "BIOS: {{ ansible_bios_version }}"
           - "SDA_DISK_SIZE: {{ ansible_device[sda].size }}"
           - "SDB_DISK_SIZE: {{ ansible_device[sdb].size }}"
