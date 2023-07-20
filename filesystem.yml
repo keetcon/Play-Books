@@ -37,7 +37,7 @@
       community.general.lvol:
         vg: "rhel"
         lv: var
-        size: +5G
+        size: 15G
         resizefs: true
     - name: Create the remaining logical volume by given space
       community.general.lvol:
