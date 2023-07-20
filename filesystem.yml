@@ -20,10 +20,13 @@
       set_fact:
         pvs: '{{ pvs + [item] }}'
       loop: "{{ansible_facts['lvm']['pvs'] | dict2items | selectattr('value.vg', 'eq', 'rhel') | map(attribute='key') | list }}"
+    - name: Add new pv to list
+      set_fact:
+        pvs: '{{ pvs + [new_disk] }}'
     - name:
       debug:
         msg: "{{ pvs }}"
-    - name: Create a volume group on top of /dev/sda1 with physical extent size = 32MB
+    - name: Grow Volume Group
       community.general.lvg:
         vg: "rhel"
         pvs: '{{ pvs }} '
@@ -31,7 +34,7 @@
       community.general.lvol:
         vg: "rhel"
         lv: var
-        size: +5gb
+        size: +5G
         resizefs: true
     - name: Create the remaining logical volume by given space
       community.general.lvol:
