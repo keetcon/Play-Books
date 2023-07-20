@@ -3,6 +3,8 @@
   hosts: '{{ target }}'
   become: yes
   gather_facts: true
+  vars:
+    pvs: []
   tasks:
     - name: Create a new primary partition for LVM
       community.general.parted:
