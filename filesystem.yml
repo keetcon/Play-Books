@@ -22,7 +22,7 @@
       loop: "{{ansible_facts['lvm']['pvs'] | dict2items | selectattr('value.vg', 'eq', 'rhel') | map(attribute='key') | list }}"
     - name: Add new pv to list
       set_fact:
-        pvs: '{{ pvs + [new_disk] }}'
+        pvs: '{{ pvs + [new_disk'1'] }}'
     - name:
       debug:
         msg: "{{ pvs }}"
