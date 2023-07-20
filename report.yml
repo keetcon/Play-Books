@@ -1,14 +1,10 @@
 ---
-- name: Server Report
-  hosts: all
+- name: Set MOTD
+  hosts: '{{ target }}'
   become: yes
   gather_facts: true
   tasks:
-    - name: Report Server Facts
-      ansible.builtin.debug:
-        msg:
-          - "Hostname: {{ ansible_fqdn }}"
-          - "MEMORY: {{ ansible_memtotal_mb }}"
-          - "BIOS: {{ ansible_bios_version }}"
-          - "SDA_DISK_SIZE: {{ ansible_facts['devices']['sda']['size'] }}"
-          - "SDB_DISK_SIZE: {{ ansible_facts['devices']['sdb']['size'] }}"
+    - name: Report
+      ansible.builtin.template:
+        src: report.j2
+        dest: /root/report.txt
