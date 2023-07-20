@@ -1,7 +1,7 @@
 Hostname: {{ ansible_fqdn }}
 MEMORY: {{ ansible_memtotal_mb }}
 BIOS: {{ ansible_bios_version }}
-SDA_DISK_SIZE: {{ ansible_facts['devices']['sda']['size'] }}
-SDB_DISK_SIZE: {{ ansible_facts['devices']['sdb']['size'] }}
-SDC_DISK_SIZE: {{ ansible_facts['devices']['sdc']['size'] }}
-SDD_DISK_SIZE: {{ ansible_facts['devices']['sdd']['size'] }}
+SDA_DISK_SIZE: {{ ansible_facts['devices']['sda']['size'] | default('None') }}
+SDB_DISK_SIZE: {{ ansible_facts['devices']['sdb']['size'] | default('None') }}
+SDC_DISK_SIZE: {{ ansible_facts['devices']['sdc']['size'] | default('None') }}
+SDD_DISK_SIZE: {{ ansible_facts['devices']['sdd']['size'] | default('None') }}
