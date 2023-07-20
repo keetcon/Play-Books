@@ -25,7 +25,7 @@
         new_pv: '{{ new_disk }}1'
     - name: Add new pv to list
       set_fact:
-        pvs: '{{ pvs + [new_pv]] }}'
+        pvs: '{{ pvs + [new_pv] }}'
     - name:
       debug:
         msg: "{{ pvs }}"
